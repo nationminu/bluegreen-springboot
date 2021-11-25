@@ -1,0 +1,20 @@
+---
+version: "3.8"
+services:   
+  springboot:
+    image: "openjdk:11"
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: "Asia/Seoul"
+      DB_URL: "jdbc:mysql://localhost:3306/example"
+      DB_USERNAME: "example"
+      DB_PASSWORD: "example"
+      DB_CLASSNAME: "com.mysql.cj.jdbc.Driver"
+    volumes:
+      - ./:/code
+    working_dir: /code/
+    # using .env
+    #command: bash -c "java -jar -Ddatabase.url=${DB_URL} -Ddatabase.username=${DB_USERNAME} -Ddatabase.password=${DB_PASSWORD} -Ddatabase.classname=${DB_CLASSNAME} /code/target/*.jar"
+    command: bash -c "java -jar -Ddatabase.url=$${DB_URL} -Ddatabase.username=$${DB_USERNAME} -Ddatabase.password=$${DB_PASSWORD} -Ddatabase.classname=$${DB_CLASSNAME} /code/target/*.jar"
+    
